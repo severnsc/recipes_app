@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   Dimensions,
   StyleSheet,
   Text,
@@ -9,8 +8,9 @@ import {
   View
 } from 'react-native';
 import Camera from 'react-native-camera';
+import { Actions } from 'react-native-router-flux';
 
-export default class Camera extends Component {
+export default class recipeCamera extends Component {
   
   constructor(props){
     super(props);
@@ -52,9 +52,9 @@ export default class Camera extends Component {
       this.setState({
         product: resJSON,
         productName: resJSON.itemname,
-      })
+      });
+      Actions.productPage({productName: resJSON.itemname});
     });
-    Actions.productPage({productName: resJSON.itemname});
   }
 
 }
