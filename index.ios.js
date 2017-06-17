@@ -11,6 +11,15 @@ import {
 import Camera from 'react-native-camera';
 
 class RecipesApp extends Component {
+  
+  constructor(props){
+    super(props);
+    this.state = {
+      product: [],
+      productName: "",
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -19,7 +28,10 @@ class RecipesApp extends Component {
             this.camera = cam;
           }}
           style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}>
+          aspect={Camera.constants.Aspect.fill}
+          onBarCodeRead={(data) => this.getProduct(data.data)}
+        >
+          <Text>{this.state.productName}</Text>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
       </View>
@@ -33,6 +45,17 @@ class RecipesApp extends Component {
       .then((data) => console.log(data))
       .catch(err => console.error(err));
   }
+
+  getProduct(upc){
+    const url = "https://api.upcdatabase.org/json/177e892136d024be7bf3847ed9c5ca20/" + upc;
+    return fetch(url).then((res) => res.json()).then((resJSON) => {
+      this.setState({
+        product: resJSON,
+        productName: resJSON.itemname,
+      })
+    });
+  }
+
 }
 
 const styles = StyleSheet.create({
