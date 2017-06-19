@@ -21,6 +21,7 @@ export default class ProductPage extends Component{
       <View style={styles.container}>
         <Text style={styles.header}>
           {this.props.productName}
+          {this.props.description}
         </Text>
       </View>
     )

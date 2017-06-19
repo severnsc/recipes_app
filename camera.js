@@ -11,14 +11,6 @@ import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
 
 export default class recipeCamera extends Component {
-  
-  constructor(props){
-    super(props);
-    this.state = {
-      product: [],
-      productName: "",
-    }
-  }
 
   render() {
     return (
@@ -31,7 +23,6 @@ export default class recipeCamera extends Component {
           aspect={Camera.constants.Aspect.fill}
           onBarCodeRead={(data) => this.getProduct(data.data)}
         >
-          <Text>{this.state.productName}</Text>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
       </View>
@@ -49,11 +40,10 @@ export default class recipeCamera extends Component {
   getProduct(upc){
     const url = "https://api.upcdatabase.org/json/ce7255bdd76c9c67e48f28e6d56b0ed0/" + upc;
     fetch(url).then((res) => res.json()).then((resJSON) => {
-      this.setState({
-        product: resJSON,
+      Actions.productPage({
         productName: resJSON.itemname,
+        description: resJSON.description,
       });
-      Actions.productPage({productName: resJSON.itemname});
     });
   }
 
