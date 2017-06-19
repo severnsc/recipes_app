@@ -12,6 +12,13 @@ import { Actions } from 'react-native-router-flux';
 
 export default class recipeCamera extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      barcode: null,
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -38,13 +45,19 @@ export default class recipeCamera extends Component {
   }
 
   getProduct(upc){
-    const url = "https://api.upcdatabase.org/json/ce7255bdd76c9c67e48f28e6d56b0ed0/" + upc;
-    fetch(url).then((res) => res.json()).then((resJSON) => {
-      Actions.productPage({
-        productName: resJSON.itemname,
-        description: resJSON.description,
+    if(this.state.barcode){
+      return
+    }else{
+      this.setState({barcode: upc});
+      const url = "https://api.upcdatabase.org/json/ce7255bdd76c9c67e48f28e6d56b0ed0/" + upc;
+      fetch(url).then((res) => res.json()).then((resJSON) => {
+        Actions.productPage({
+          productName: resJSON.itemname,
+          description: resJSON.description,
+        });
       });
-    });
+      setTimeout(() => {this.setState({barcode: null})}, 3000);
+    }
   }
 
 }
