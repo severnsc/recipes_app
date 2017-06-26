@@ -9,6 +9,11 @@ import {
 } from 'react-native';
 import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
+const FileUpload = require('NativeModules').FileUpload;
+
+const last = (array) => {
+  return array[array.length - 1]
+}
 
 export default class recipeCamera extends Component {
 
@@ -29,6 +34,7 @@ export default class recipeCamera extends Component {
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}
           onBarCodeRead={(data) => this.getProduct(data.data)}
+          captureTarget={Camera.constants.CaptureTarget.disk}
         >
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
@@ -40,8 +46,22 @@ export default class recipeCamera extends Component {
     const options = {};
     //options.location = ...
     this.camera.capture({metadata: options})
-      .then((data) => console.log(data))
+      .then((obj) => {
+
+      })
       .catch(err => console.error(err));
+  }
+
+  uploadFile(path) {
+    const obj = {
+      uploadUrl: 'http://localhost:3000',
+      method: 'POST',
+      files: [
+        {
+          filename: 
+        }
+      ]
+    }
   }
 
   getProduct(upc){
