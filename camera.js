@@ -58,7 +58,8 @@ export default class recipeCamera extends Component {
       method: 'POST',
       files: [
         {
-          filename: 
+          filename: last(path.split("/")),
+          filepath: path,
         }
       ]
     }
