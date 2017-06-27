@@ -64,7 +64,16 @@ export default class recipeCamera extends Component {
       ]
     }
     FileUpload.upload(obj, (err, res) => {
-      console.log('upload:', err, res)
+      
+      if(err){
+        console.log(err)
+      }
+
+      Actions.productPage({
+        productName: "",
+        description: res,
+      })
+
     })
   }
 
