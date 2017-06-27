@@ -47,7 +47,7 @@ export default class recipeCamera extends Component {
     //options.location = ...
     this.camera.capture({metadata: options})
       .then((obj) => {
-
+        uploadFile(obj.path)
       })
       .catch(err => console.error(err));
   }
@@ -63,6 +63,9 @@ export default class recipeCamera extends Component {
         }
       ]
     }
+    FileUpload.upload(obj, (err, res) => {
+      console.log('upload:', err, res)
+    })
   }
 
   getProduct(upc){
