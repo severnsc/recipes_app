@@ -47,34 +47,13 @@ export default class recipeCamera extends Component {
     //options.location = ...
     this.camera.capture({metadata: options})
       .then((obj) => {
-        uploadFile(obj.path)
+        this.uploadFile(obj.path)
       })
       .catch(err => console.error(err));
   }
 
   uploadFile(path) {
-    const obj = {
-      uploadUrl: 'http://localhost:3000',
-      method: 'POST',
-      files: [
-        {
-          filename: last(path.split("/")),
-          filepath: path,
-        }
-      ]
-    }
-    FileUpload.upload(obj, (err, res) => {
-      
-      if(err){
-        console.log(err)
-      }
-
-      Actions.productPage({
-        productName: "",
-        description: res,
-      })
-
-    })
+    
   }
 
   getProduct(upc){
