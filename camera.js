@@ -53,7 +53,7 @@ export default class recipeCamera extends Component {
   }
 
   uploadFile(path) {
-    RNFetchBlob.fetch('POST', 'http://192.168.130.5:3000', {
+    RNFetchBlob.fetch('POST', 'http://10.1.10.216:3000', {
       'Content-Type': 'application/octet-stream'
     }, RNFetchBlob.wrap(path))
       .then(res => res.json())
@@ -67,6 +67,8 @@ export default class recipeCamera extends Component {
       .catch((err) => {
         console.log(err)
       })
+
+      Actions.loadingPage()
   }
 
   getProduct(upc){
