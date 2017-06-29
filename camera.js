@@ -22,6 +22,7 @@ export default class recipeCamera extends Component {
     this.state = {
       barcode: null,
     }
+    this.onFocusChange = this.onFocusChange.bind(this)
   }
 
   render() {
@@ -35,12 +36,17 @@ export default class recipeCamera extends Component {
           aspect={Camera.constants.Aspect.fill}
           onBarCodeRead={(data) => this.getProduct(data.data)}
           captureTarget={Camera.constants.CaptureTarget.disk}
+          onFocusChanged={() => this.onFocusChange}
+          defaultOnFocusComponent={true}
+          keepAwake={true}
         >
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
       </View>
     );
   }
+
+  onFocusChange(){}
 
   takePicture() {
     const options = {};
