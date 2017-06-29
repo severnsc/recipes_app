@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
-const FileUpload = require('NativeModules').FileUpload;
+import RNFetchBlob from 'react-native-fetch-blob';
 
 const last = (array) => {
   return array[array.length - 1]
@@ -53,7 +53,15 @@ export default class recipeCamera extends Component {
   }
 
   uploadFile(path) {
-    
+    RNFetchBlob.fetch('POST', 'http://localhost:3000', {
+      'Content-Type': 'application/octet-stream'
+    }, RNFetchBlob.wrap(path))
+      .then((res) => {
+        console.log(res.text())
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   getProduct(upc){
