@@ -74,9 +74,8 @@ export default class recipeCamera extends Component {
       .then(res => res.json())
       .then((resJSON) => {
         console.log(resJSON.text)
-        Actions.productPage({
-          productName: '',
-          description: resJSON.text
+        Actions.receiptPage({
+          text: resJSON.text
         })
       })
       .catch((err) => {
