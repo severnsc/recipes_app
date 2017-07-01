@@ -12,6 +12,7 @@
 		"react-native-camera": "^0.9.0",
 		"react-native-fetch-blob": "^0.10.6",
 		"react-native-file-upload": "^1.0.4",
+		"react-native-network-info": "^2.2.0",
 		"react-native-router-flux": "^3.40.1"
 	},
 	"devDependencies": {

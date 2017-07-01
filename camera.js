@@ -10,10 +10,14 @@ import {
 import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
 import RNFetchBlob from 'react-native-fetch-blob';
+import { NetworkInfo } from 'react-native-network-info';
+import config from 'config';
 
 const last = (array) => {
   return array[array.length - 1]
 }
+
+const ip = NetworkInfo.getIPAddress()
 
 export default class recipeCamera extends Component {
 
@@ -46,6 +50,10 @@ export default class recipeCamera extends Component {
     );
   }
 
+  onComponentWillMount(){
+
+  }
+
   onFocusChange(){}
 
   takePicture() {
@@ -59,7 +67,8 @@ export default class recipeCamera extends Component {
   }
 
   uploadFile(path) {
-    RNFetchBlob.fetch('POST', 'http://10.1.10.216:3000', {
+    const address = "http://" + ip + ":3000"
+    RNFetchBlob.fetch('POST', address, {
       'Content-Type': 'application/octet-stream'
     }, RNFetchBlob.wrap(path))
       .then(res => res.json())
@@ -82,7 +91,7 @@ export default class recipeCamera extends Component {
       return
     }else{
       this.setState({barcode: upc});
-      const url = "https://api.upcdatabase.org/json/ce7255bdd76c9c67e48f28e6d56b0ed0/" + upc;
+      const url = "https://api.upcdatabase.org/json/" + config.API_KEY + "/" + upc;
       fetch(url).then((res) => res.json()).then((resJSON) => {
         Actions.productPage({
           productName: resJSON.itemname,
